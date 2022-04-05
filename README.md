@@ -3,6 +3,7 @@
 **Installation**
 - Install with ``` git clone https://github.com/3BixxPy/PythonBackdoor.git ```
 - If you dont have git just install to a folder
+- Read all thats below
 
 **Setup**
 - Replace "IP" with your public IP in client.py and attacker.py **dont replace in server.py**
