@@ -32,7 +32,7 @@
 - After installing the updated project client probably wont work
 - Also there are better backdoors than this that bypass WindowsDefender and wont show in task manager
 ***For Educational Purposes Only**
-   - **You should not test this on devices that you do not own or do not have permission to test on***
+   - **You should not test this on devices that you do not own or do not have permission to test on**
 
 **Known Bugs**
 - When server restarts more than once client wont attempt to reconnect
