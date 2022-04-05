@@ -1,7 +1,7 @@
 import socket
 
 HEADER = 1024
-PORT = PORT
+PORT = your port here
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 SERVER = "your public IP here dont remove quotes"
