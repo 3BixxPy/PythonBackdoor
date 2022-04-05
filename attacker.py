@@ -1,10 +1,10 @@
 import socket
 
 HEADER = 1024
-PORT = 65459
+PORT = PORT
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "90.64.0.146"
+SERVER = "your public IP here dont remove quotes"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
