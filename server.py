@@ -42,8 +42,6 @@ def handle_connection(conn, addr):
                 if selectedclient:
                     for c in clients:
                         if c[1] == addr:
-                            print(c[1])
-                            print(addr)
                             if c[0] == selectedclient:
                                 print("client: " + messageC)
                                 attacker[0].send(messageC.encode(FORMAT))
