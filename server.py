@@ -1,7 +1,7 @@
 import socket
 import threading
 
-HEADER = 2048
+HEADER = 8192
 PORT = 0  # Replace 0 With Your Port Number
 SERVER = "0.0.0.0"
 ADDR = (SERVER, PORT)
@@ -37,7 +37,7 @@ def handle_connection(conn, addr):
                 clientnum, messageC = str(msg).split("<?CLIENT?>")
                 if i == 0:
                     clients.append((clientnum, addr, conn))
-                    print(str(addr) + " client connected")
+                    print(str(addr) + ":" + clientnum + " client connected")
                 i = 1
                 if selectedclient:
                     for c in clients:
