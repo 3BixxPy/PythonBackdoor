@@ -37,7 +37,7 @@ def handle_connection(conn, addr):
                 clientnum, messageC = str(msg).split("<?CLIENT?>")
                 if i == 0:
                     clients.append((clientnum, addr, conn))
-                    print(addr + " client connected")
+                    print(str(addr) + " client connected")
                 i = 1
                 if selectedclient:
                     for c in clients:
