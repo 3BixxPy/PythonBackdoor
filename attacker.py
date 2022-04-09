@@ -1,6 +1,6 @@
 import socket
 
-HEADER = 2048
+HEADER = 8192
 PORT = 0  # Replace 0 With Your Port Number
 SERVER = "localhost"  # Replace localhost With Your Public IP
 FORMAT = 'utf-8'
