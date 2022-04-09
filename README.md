@@ -27,6 +27,7 @@
 
 # Info about Projekt PythonBackdoor
 - Only for Windows!
+- This Backdoor will work anywhere over the internet
 - I will update this projekt as I get better at python
 - After installing the updated project client probably wont work
 - Also there are better backdoors than this that bypass WindowsDefender and wont show in task manager\
