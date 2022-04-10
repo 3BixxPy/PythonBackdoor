@@ -44,7 +44,8 @@ def handle_connection(conn, addr):
                 if "<?CLIENT?>" in msg:
                     clientnum, messageC = str(msg).split("<?CLIENT?>")
                     if i == 0:
-                        clients.append((clientnum, addr, conn))
+                        cac = (clientnum, addr, conn)
+                        clients.append(cac)
                         print("\033[2;33;5m" + str(addr) + ":" + clientnum + " client connected")
                     i = 1
                     if selectedclient:
@@ -82,14 +83,15 @@ def handle_connection(conn, addr):
                         print("\033[2;0;5m attacker: " + messageA)
                         for c in clients:
                             if c[0] == selectedclient:
-                                try:
-                                    c[2].send(messageA.encode(FORMAT))
-                                except:
-                                    clients.remove(c)
+                                c[2].send(messageA.encode(FORMAT))
                         messageA = ""
                         break
     except:
         attacker = []
+        for c in clients:
+            if c == cac:
+                clients.remove(c)
+                print(str(c[1]) + ":" + str(c[0]) + " disconnected\033[2;33;5m")
 
 
 def start():
@@ -114,3 +116,4 @@ print("""\033[2;31;5m
 """)
 print("\033[2;32;5m[STARTING] server is starting...")
 start()
+
