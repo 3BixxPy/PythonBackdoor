@@ -27,7 +27,7 @@
 **Additional Commands**
 - Keylogger usage ```kl <time in seconds>``` kl will log keys to kl.txt for that amount of time
 - Random mouse movement ```rm``` moves the mouse randomly
-- Close ```close``` closes attacker and ```close client`` closes client
+- Close ```close``` closes attacker and ```close client``` closes client
 - Message box ```mb <title> <text> <style 0-6>``` [styles](https://pastebin.com/KYHZRYkW)
 
 # Info about Projekt PythonBackdoor
