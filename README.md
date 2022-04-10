@@ -23,6 +23,7 @@
 - Client.exe will run on startup if located in %appdata%\microsoft\windows\start menu\programs\startup
 - Do not close the server and rerun
 - In attacker.py use as a normal CMD
+
 **Additional Commands**
 - Keylogger usage ```kl <time in seconds>``` kl will log keys to kl.txt for that amount of time
 - Random mouse movement ```rm```
