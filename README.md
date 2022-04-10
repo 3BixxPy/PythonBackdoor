@@ -41,4 +41,5 @@
 
 **Known Bugs**
 - When server restarts more than once client wont attempt to reconnect
+- If set existent Client name server.py breaks
   
