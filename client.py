@@ -82,6 +82,7 @@ while True:
                 output = e
         if "rm" in command.split():
             random_mouse()
+            command = ""
         if "close" in command.split():
             client.close()
         else:
