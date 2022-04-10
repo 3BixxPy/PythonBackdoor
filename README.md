@@ -40,6 +40,5 @@
   - **You should not test this on devices that you do not own or do not have permission to test on**
 
 **Known Bugs**
-- When server restarts more than once client wont attempt to reconnect
-- If set non existent Client name server.py breaks
+- When server restarts client wont attempt to reconnect
   
