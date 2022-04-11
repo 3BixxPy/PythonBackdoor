@@ -35,9 +35,9 @@
 # Info about Projekt PythonBackdoor
 - Only for Windows!
 - This Backdoor will work anywhere over the internet if you use your public ip and portforwarded port
-- I will update this projekt as I get better at python
-- After installing the updated project client probably wont work
-- Also there are better backdoors than this that bypass WindowsDefender and wont show in task manager..
+- I'll update this projekt as I get better at python
+- After update client, attacker, server probably won't work
+- Also there are better backdoors that bypass WindowsDefender
 - But you can still make it undetectable if you know what you're doing [here](https://null-byte.wonderhowto.com/forum/creating-completely-undetectable-executable-under-15-minutes-0175114/)\
  **[For Educational Purposes Only]**
   - **You should not test this on devices that you do not own or do not have permission to test on**
