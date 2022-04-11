@@ -37,7 +37,8 @@
 - This Backdoor will work anywhere over the internet
 - I will update this projekt as I get better at python
 - After installing the updated project client probably wont work
-- Also there are better backdoors than this that bypass WindowsDefender and wont show in task manager\
+- Also there are better backdoors than this that bypass WindowsDefender and wont show in task manager..
+- But you can still make it undetectable if you know what you're doing [here](https://null-byte.wonderhowto.com/forum/creating-completely-undetectable-executable-under-15-minutes-0175114/)\
  **[For Educational Purposes Only]**
   - **You should not test this on devices that you do not own or do not have permission to test on**
 
