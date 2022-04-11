@@ -7,6 +7,7 @@
 
 **Setup**
 - Run ```pip install -r requirements.txt```
+- If you have any missing packages install them
 - Replace "IP" with your public IP in client.py and attacker.py **dont replace in server.py**
 - Replace "CLIENTNUMBER" in client.py with any number that you haven't used yet.
   - always set a different CLIENTNUMBER to every new client you intend to use
