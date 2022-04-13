@@ -26,6 +26,7 @@ def get_clients(l):
 
 
 def handle_connection(conn, addr):
+    cac = ""
     try:
         global attacker
         global client
@@ -91,7 +92,7 @@ def handle_connection(conn, addr):
         for c in clients:
             if c == cac:
                 clients.remove(c)
-                print(str(c[1]) + ":" + str(c[0]) + " disconnected\033[2;33;5m")
+                print("\033[2;33;5m" + str(c[1]) + ":" + str(c[0]) + " disconnected")
 
 
 def start():
