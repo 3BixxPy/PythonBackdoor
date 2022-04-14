@@ -40,8 +40,8 @@
 - After update client, attacker, server probably won't work
 - Also there are better backdoors that bypass WindowsDefender
 - But you can still make it undetectable if you know what you're doing [here](https://null-byte.wonderhowto.com/forum/creating-completely-undetectable-executable-under-15-minutes-0175114/)\
- **[For Educational Purposes Only]**
-   **You should not test this on devices that you do not own or do not have permission to test on**
+ **[For Educational Purposes Only]**\
+  **You should not test this on devices that you do not own or do not have permission to test on**
 
 **Known Bugs**
 - When server restarts client wont attempt to reconnect
